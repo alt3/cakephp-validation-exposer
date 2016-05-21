@@ -1,5 +1,5 @@
 <?php
-namespace Alt3\ValidationExposer;
+namespace Alt3\ValidationExposer\Lib;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Network\Exception\InternalErrorException;
@@ -89,7 +89,8 @@ class ValidationExposer
      * Returns a flat array with lowercased/underscored names for all tables
      * found in the application, minus configuration excluded tables.
      *
-     * return void
+     * @throws Cake\Network\Exception\InternalErrorException
+     * @return array Tables to include in rule aggregation
      */
     protected function _getApplicationTables()
     {
@@ -98,7 +99,7 @@ class ValidationExposer
             throw new InternalErrorException("Could not find any tables in the application");
         }
 
-        if(!count($this->_exclude)) {
+        if (!count($this->_exclude)) {
             return $tables;
         }
 
@@ -108,10 +109,11 @@ class ValidationExposer
     /**
      * Returns a hash with all validation rules for any given table.
      *
-     * @param $table Valid table name
+     * @param string $table Valid table name
      * @return array|void Hash if table contains validation rules, void otherwise
      */
-    protected function _getTableValidationRules($table) {
+    protected function _getTableValidationRules($table)
+    {
         $tableObject = TableRegistry::get($table);
         $validator = $tableObject->validator();
         $validationSetIterator = $validator->getIterator();
