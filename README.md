@@ -6,9 +6,9 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-validation-exposer.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-validation-exposer)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-Easily expose all your CakePHP 3.x application validation rules.
+Easily expose your CakePHP 3.x application validation rules.
 
-## Why use this?
+## Why use it?
 
 Exposing your application's validation rules can be very useful for e.g.
 completely separated frontend applications. Imagine a React frontend for your
