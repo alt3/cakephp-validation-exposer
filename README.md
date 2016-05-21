@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-validation-exposer.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-validation-exposer)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-CakePHP 3.x plugin to easily expose your application validation rules.
+Easily expose your CakePHP 3.x application validation rules.
 
 ## Requirements
 
