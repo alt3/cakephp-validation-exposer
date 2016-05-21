@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Alt3\\Swagger\\Test\\": "tests"
+            "Alt3\\ValidationExposer\\Test\\": "tests"
         }
     }
 }
