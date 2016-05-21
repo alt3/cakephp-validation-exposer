@@ -29,7 +29,7 @@ matching your CakePHP API backend's validation rules. Some benefits:
 1. Install the plugin using composer:
 
     ```bash
-    composer require alt3/cakephp-validation-exposer
+    composer require alt3/cakephp-validation-exposer:"^1.0"
     ```
 
 2. To enable the plugin either run the following command:
