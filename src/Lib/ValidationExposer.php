@@ -12,9 +12,7 @@ use Cake\Utility\Hash;
 class ValidationExposer
 {
     /**
-     * Array with merged configuration settings.
-     *
-     * @var array
+     * @var array Will hold merged configuration settings.
      */
     protected $_config = [
         'tableExclusions' => [
@@ -23,14 +21,12 @@ class ValidationExposer
     ];
 
     /**
-     * Flat array holding all tables found in the application, minus exclusions.
-     *
-     * @var array
+     * @var array Flat array holding table names included in aggregation.
      */
     protected $_tables;
 
     /**
-     * @var string $_excludedTables Flat array with table names to exclude.
+     * @var array Flat array holding table names to exclude from aggregation.
      */
     protected $_excludedTables;
 
@@ -96,7 +92,7 @@ class ValidationExposer
     {
         $tables = ConnectionManager::get('default')->schemaCollection()->listTables();
         if (!count($tables)) {
-            throw new InternalErrorException("Could not find any tables in the application");
+            throw new InternalErrorException('Could not find any tables in the application');
         }
 
         if (!count($this->_excludedTables)) {
@@ -169,7 +165,7 @@ class ValidationExposer
                     foreach ($this->_config['hiddenRuleParts'] as $arrayKey) {
                         if (array_key_exists($arrayKey, $temp)) {
                             unset($temp[$arrayKey]);
-                        };
+                        }
                     }
                 }
 
