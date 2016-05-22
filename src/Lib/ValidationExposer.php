@@ -51,7 +51,7 @@ class ValidationExposer
      *
      * @return array
      */
-    public function applicationTables()
+    public function tables()
     {
         return $this->_tables;
     }
@@ -156,6 +156,12 @@ class ValidationExposer
                 $pass = $validationRule->get('pass');
                 if (!empty($pass)) {
                     $temp['pass'] = $validationRule->get('pass');
+                }
+
+                // continue with next rule if we don't need to hide parts
+                if (!isset($this->_config['hiddenRuleParts'])) {
+                    $result[$field]['rules'][] = $temp;
+                    continue;
                 }
 
                 // remove validation parts marked as hidden in config
