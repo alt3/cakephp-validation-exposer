@@ -48,7 +48,7 @@ matching your CakePHP API backend's validation rules. Some benefits:
 
 1. Create a `ValidationExposer` object anywhere in your application
 2. Call the `rules()` method
-3. Present the returned array with validation information as you see fit
+3. Present the returned array with validation information any way you see fit
 
 ### API example
 
