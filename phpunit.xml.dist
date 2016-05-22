@@ -14,7 +14,7 @@
 	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
 		<testsuite name="CakePHP Validation Exposer Test Suite">
-			<directory>./tests/TestCase</directory>
+			<directory>./tests/</directory>
 		</testsuite>
 		<!-- Add plugin test suites here. -->
 	</testsuites>
@@ -30,17 +30,9 @@
 		</listener>
 	</listeners>
 
-	<!-- Prevent coverage reports from looking in tests and vendors -->
+	<!-- Whitelist for code coverage -->
 	<filter>
-		<blacklist>
-			<directory suffix=".php">./tests/</directory>
-			<directory suffix=".ctp">./tests/</directory>
-
-			<directory suffix=".php">./vendor/</directory>
-			<directory suffix=".ctp">./vendor/</directory>
-		</blacklist>
 		<whitelist>
-			<directory suffix=".php">./config/</directory>
 			<directory suffix=".php">./src/</directory>
 		</whitelist>
 	</filter>
