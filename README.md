@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/alt3/cakephp-validation-exposer/master.svg?style=flat-square)](https://travis-ci.org/alt3/cakephp-validation-exposer)
 [![StyleCI Status](https://styleci.io/repos/59366680/shield)](https://styleci.io/repos/59366680)
-[![Coverage](https://img.shields.io/coveralls/alt3/cakephp-validation-exposer/master.svg?style=flat-square)](https://coveralls.io/r/alt3/cakephp-validation-exposer)
+[![codecov](https://codecov.io/gh/alt3/cakephp-validation-exposer/branch/master/graph/badge.svg)](https://codecov.io/gh/alt3/cakephp-validation-exposer)
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-validation-exposer.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-validation-exposer)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
