@@ -205,12 +205,6 @@ included in validation aggregation.
 )
 ````
 
-
-## TODO
-
-- add tests
-- add config option for field exclusions (e.g. `id`)
-
 ## Contribute
 
 Before submitting a PR make sure:
