@@ -59,7 +59,7 @@ use Alt3\ValidationExposer\Lib\ValidationExposer;
 
 class SystemController extends AppController
 
-    public function rules()
+    public function validationInfo()
     {
         $validationExposer = new ValidationExposer([
             'excludedTables' => [
@@ -98,9 +98,8 @@ array and they will not appear in the result set:
 
 ### `rules()`
 
-Calling the `rules()` method will return a hash containing all
-validation information found in your application structured similar to shown
-below:
+Use the `rules()` method to produce a hash containing all validation
+information found in your application structured similarly to shown below:
 
 ```php
 [users] => Array
@@ -183,7 +182,7 @@ below:
 ### `tables()`
 
 Use the `tables()` method to produce a flat array with all tables included
-during validation aggregation.
+in validation aggregation.
 
 ```php
 (
