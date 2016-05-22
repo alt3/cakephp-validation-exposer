@@ -4,8 +4,8 @@ namespace Alt3\ValidationExposer\Lib;
 use Cake\TestSuite\TestCase;
 
 /**
- * Separate test class since this excpetion will only be thrown when no fixtures
- * are loaded,
+ * Separate test class since this exception will only be thrown when no
+ * fixtures are loaded.
  */
 class ValidationExposerExceptionTest extends TestCase
 {
