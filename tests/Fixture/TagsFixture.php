@@ -5,7 +5,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class TagsFixture extends TestFixture
 {
-    public $table = 'slug_tags';
+    public $table = 'tags';
 
     public $fields = [
         'id' => ['type' => 'integer'],

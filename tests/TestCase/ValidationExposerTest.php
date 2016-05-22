@@ -101,6 +101,52 @@ class ValidationExposerTest extends TestCase
     }
 
     /**
+     * Make sure `tables()` method returns all loaded tables.
+     */
+    public function testTablesMethodSuccess()
+    {
+        $expected = [
+            'articles',
+            'authors',
+            'tags'
+        ];
+
+        $validator = new ValidationExposer();
+        $result = $validator->tables();
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * Make sure `tables()` and `excludedTables()` methods honer exclusions.
+     */
+    public function testMethodsWithExcludedTables()
+    {
+        // test `tables()` method
+        $expected = [
+            'articles',
+            'authors'
+        ];
+
+        $validator = new ValidationExposer([
+            'excludedTables' => [
+                'tags'
+            ]
+        ]);
+        $result = $validator->tables();
+        $this->assertSame($expected, $result);
+
+        // test `excludedTables()` method
+        $expected = [
+            'phinxlog',
+            'tags'
+        ];
+
+        $result = $validator->excludedTables();
+        $this->assertSame($expected, $result);
+    }
+
+    /**
      * Convenience function to return an object with reflection class,
      * accessible protected methods and accessible protected properties.
      *

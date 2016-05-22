@@ -5,7 +5,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class ArticlesFixture extends TestFixture
 {
-    public $table = 'slug_articles';
+    public $table = 'articles';
 
     /**
      * fields property.
