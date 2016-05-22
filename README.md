@@ -1,8 +1,8 @@
 # cakephp-validation-exposer
 
 [![Build Status](https://img.shields.io/travis/alt3/cakephp-validation-exposer/master.svg?style=flat-square)](https://travis-ci.org/alt3/cakephp-validation-exposer)
-[![StyleCI Status](https://styleci.io/repos/45741948/shield)](https://styleci.io/repos/45741948)
-[![Coverage](https://img.shields.io/coveralls/alt3/cakephp-validation-exposer/master.svg?style=flat-square)](https://coveralls.io/r/alt3/cakephp-validation-exposer)
+[![StyleCI Status](https://styleci.io/repos/59366680/shield)](https://styleci.io/repos/59366680)
+[![codecov](https://codecov.io/gh/alt3/cakephp-validation-exposer/branch/master/graph/badge.svg)](https://codecov.io/gh/alt3/cakephp-validation-exposer)
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-validation-exposer.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-validation-exposer)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
@@ -16,7 +16,7 @@ API being able to realtime configure (very fast) local validation rules exactly
 matching your CakePHP API backend's validation rules. Some benefits:
 
 - no more mismatches between local and backend validations
-- backend validation changes directly applied in the frontend application
+- backend validation changes instantly applied in frontend application
 - no more fire-and-hope POSTing of data
 - less local 412 validation errors
 
@@ -46,31 +46,61 @@ matching your CakePHP API backend's validation rules. Some benefits:
 
 ## Usage
 
-Inside any controller
+1. Create a `ValidationExposer` object anywhere in your application
+2. Call the `applicationRules()` method
+3. Present the returned array with validation information as you see fit
+
+### API example
+
 
 ```php
 <?php
 use Alt3\ValidationExposer\Lib\ValidationExposer;
 
+class SystemController extends AppController
 
-public function rules()
-{
-    $validationExposer = new ValidationExposer([
-        'exclude' => [
-            'table_to_skip'
-        ]
-    ]);
+    public function rules()
+    {
+        $validationExposer = new ValidationExposer([
+            'excludedTables' => [
+                'table_to_skip' // this table will not be processed
+            ],
+            'hiddenRuleParts' =>
+                'message' // do not show this part inside the `rules` array
+            ]
+        ]);
 
-    $this->set([
-        'success' => true,
-        'data' => $validationExposer->applicationRules(),
-        '_serialize' => ['success', 'data']
-    ]);
+        $this->set([
+            'success' => true,
+            'data' => $validationExposer->applicationRules(),
+            '_serialize' => ['success', 'data']
+        ]);
+    }
 }
 ```
 
-The `applicationRules()` method will return a hash containing all validation
-information in your application structured similar to shown below:
+## Configuration
+
+Any table found in the `excludedTables` configuration array will not be
+searched for validation information.
+
+> Please note that the `phinxlog` table is excluded by default.
+
+Add one or more of the following fields to the `hiddenRuleParts` configuration
+array and they will not appear in the result set:
+
+- `name`: holds the rule name
+- `rule`: holds the internal rule name (numeric, unique, etc)
+- `message`: holds the validation message
+- `parts`: holds arguments passed to the validation rule
+
+## Methods
+
+### `applicationRules()`
+
+Calling the `applicationRules()` method will return a hash containing all
+validation information found in your application structured similar to shown
+below:
 
 ```php
 [users] => Array
@@ -150,11 +180,36 @@ information in your application structured similar to shown below:
         )
 ````
 
+### `tables()`
+
+Use the `tables()` method to produce a flat array with all tables included
+during validation aggregation.
+
+```php
+(
+    [0] => cocktails
+    [1] => liquors
+    [2] => users
+)
+````
+
+### `excludedTables()`
+
+Use the `excludedTables()` method to produce a flat array with tables not
+included in validation aggregation.
+
+```php
+(
+    [0] => phinxlog
+    [1] => staging
+)
+````
+
+
 ## TODO
 
-- describe configuration options
 - add tests
-- make resultant fields configurable (e.g. do not show `rule`)
+- add config option for field exclusions (e.g. `id`)
 
 ## Contribute
 

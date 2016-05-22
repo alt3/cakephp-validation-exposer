@@ -12,27 +12,23 @@ use Cake\Utility\Hash;
 class ValidationExposer
 {
     /**
-     * Array with merged configuration settings.
-     *
-     * @var array
+     * @var array Will hold merged configuration settings.
      */
     protected $_config = [
-        'exclude' => [
+        'tableExclusions' => [
             'phinxlog'
         ]
     ];
 
     /**
-     * Flat array holding all tables found in the application, minus exclude.
-     *
-     * @var array
+     * @var array Flat array holding table names included in aggregation.
      */
     protected $_tables;
 
     /**
-     * @var string $_exclude Flat array with table names to exclude.
+     * @var array Flat array holding table names to exclude from aggregation.
      */
-    protected $_exclude;
+    protected $_excludedTables;
 
     /**
      * Class constructor.
@@ -42,7 +38,7 @@ class ValidationExposer
     public function __construct($config = [])
     {
         $this->_config = Hash::merge($this->_config, $config);
-        $this->_exclude = $this->_config['exclude'];
+        $this->_excludedTables = $this->_config['tableExclusions'];
         $this->_tables = $this->_getApplicationTables();
     }
 
@@ -51,7 +47,7 @@ class ValidationExposer
      *
      * @return array
      */
-    public function applicationTables()
+    public function tables()
     {
         return $this->_tables;
     }
@@ -63,7 +59,7 @@ class ValidationExposer
      */
     public function excludedTables()
     {
-        return $this->_exclude;
+        return $this->_excludedTables;
     }
 
     /**
@@ -89,21 +85,21 @@ class ValidationExposer
      * Returns a flat array with lowercased/underscored names for all tables
      * found in the application, minus configuration excluded tables.
      *
-     * @throws Cake\Network\Exception\InternalErrorException
+     * @throws \Cake\Network\Exception\InternalErrorException
      * @return array Tables to include in rule aggregation
      */
     protected function _getApplicationTables()
     {
         $tables = ConnectionManager::get('default')->schemaCollection()->listTables();
         if (!count($tables)) {
-            throw new InternalErrorException("Could not find any tables in the application");
+            throw new InternalErrorException('Could not find any tables in the application');
         }
 
-        if (!count($this->_exclude)) {
+        if (!count($this->_excludedTables)) {
             return $tables;
         }
 
-        return array_diff($tables, $this->_exclude);
+        return array_diff($tables, $this->_excludedTables);
     }
 
     /**
@@ -147,24 +143,33 @@ class ValidationExposer
             $result[$field]['rules'] = [];
 
             foreach ($validationRuleIterator as $ruleName => $validationRule) {
-                $rule = $validationRule->get('rule');
-                $message = $validationRule->get('message');
-                $pass = $validationRule->get('pass');
+                $temp = [
+                    'name' => $ruleName,
+                    'rule' => $validationRule->get('rule'),
+                    'message' => $validationRule->get('message')
+                ];
 
+                $pass = $validationRule->get('pass');
                 if (!empty($pass)) {
-                    $result[$field]['rules'][] = [
-                        'name' => $ruleName,
-                        'rule' => $rule,
-                        'message' => $message,
-                        'pass' => $pass
-                    ];
-                } else {
-                    $result[$field]['rules'][] = [
-                        'name' => $ruleName,
-                        'rule' => $rule,
-                        'message' => $message
-                    ];
+                    $temp['pass'] = $validationRule->get('pass');
                 }
+
+                // continue with next rule if we don't need to hide parts
+                if (!isset($this->_config['hiddenRuleParts'])) {
+                    $result[$field]['rules'][] = $temp;
+                    continue;
+                }
+
+                // remove validation parts marked as hidden in config
+                if (count($this->_config['hiddenRuleParts'])) {
+                    foreach ($this->_config['hiddenRuleParts'] as $arrayKey) {
+                        if (array_key_exists($arrayKey, $temp)) {
+                            unset($temp[$arrayKey]);
+                        }
+                    }
+                }
+
+                $result[$field]['rules'][] = $temp;
             }
         }
 
