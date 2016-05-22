@@ -8,7 +8,7 @@ class AuthorsFixture extends TestFixture
     public $table = 'slug_authors';
 
     /**
-     * fields property
+     * fields property.
      *
      * @var array
      */
@@ -19,7 +19,7 @@ class AuthorsFixture extends TestFixture
     ];
 
     /**
-     * records property
+     * records property.
      *
      * @var array
      */

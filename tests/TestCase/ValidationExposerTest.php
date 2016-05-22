@@ -1,8 +1,6 @@
 <?php
 namespace Alt3\ValidationExposer\Lib;
 
-
-use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use StdClass;
 

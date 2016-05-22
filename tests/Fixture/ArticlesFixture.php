@@ -8,7 +8,7 @@ class ArticlesFixture extends TestFixture
     public $table = 'slug_articles';
 
     /**
-     * fields property
+     * fields property.
      *
      * @var array
      */
@@ -24,7 +24,7 @@ class ArticlesFixture extends TestFixture
     ];
 
     /**
-     * records property
+     * records property.
      *
      * @var array
      */
