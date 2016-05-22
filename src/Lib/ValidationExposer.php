@@ -17,22 +17,22 @@ class ValidationExposer
      * @var array
      */
     protected $_config = [
-        'exclude' => [
+        'tableExclusions' => [
             'phinxlog'
         ]
     ];
 
     /**
-     * Flat array holding all tables found in the application, minus exclude.
+     * Flat array holding all tables found in the application, minus exclusions.
      *
      * @var array
      */
     protected $_tables;
 
     /**
-     * @var string $_exclude Flat array with table names to exclude.
+     * @var string $_excludedTables Flat array with table names to exclude.
      */
-    protected $_exclude;
+    protected $_excludedTables;
 
     /**
      * Class constructor.
@@ -42,7 +42,7 @@ class ValidationExposer
     public function __construct($config = [])
     {
         $this->_config = Hash::merge($this->_config, $config);
-        $this->_exclude = $this->_config['exclude'];
+        $this->_excludedTables = $this->_config['tableExclusions'];
         $this->_tables = $this->_getApplicationTables();
     }
 
@@ -63,7 +63,7 @@ class ValidationExposer
      */
     public function excludedTables()
     {
-        return $this->_exclude;
+        return $this->_excludedTables;
     }
 
     /**
@@ -89,7 +89,7 @@ class ValidationExposer
      * Returns a flat array with lowercased/underscored names for all tables
      * found in the application, minus configuration excluded tables.
      *
-     * @throws Cake\Network\Exception\InternalErrorException
+     * @throws \Cake\Network\Exception\InternalErrorException
      * @return array Tables to include in rule aggregation
      */
     protected function _getApplicationTables()
@@ -99,11 +99,11 @@ class ValidationExposer
             throw new InternalErrorException("Could not find any tables in the application");
         }
 
-        if (!count($this->_exclude)) {
+        if (!count($this->_excludedTables)) {
             return $tables;
         }
 
-        return array_diff($tables, $this->_exclude);
+        return array_diff($tables, $this->_excludedTables);
     }
 
     /**
@@ -147,24 +147,27 @@ class ValidationExposer
             $result[$field]['rules'] = [];
 
             foreach ($validationRuleIterator as $ruleName => $validationRule) {
-                $rule = $validationRule->get('rule');
-                $message = $validationRule->get('message');
-                $pass = $validationRule->get('pass');
+                $temp = [
+                    'name' => $ruleName,
+                    'rule' => $validationRule->get('rule'),
+                    'message' => $validationRule->get('message')
+                ];
 
+                $pass = $validationRule->get('pass');
                 if (!empty($pass)) {
-                    $result[$field]['rules'][] = [
-                        'name' => $ruleName,
-                        'rule' => $rule,
-                        'message' => $message,
-                        'pass' => $pass
-                    ];
-                } else {
-                    $result[$field]['rules'][] = [
-                        'name' => $ruleName,
-                        'rule' => $rule,
-                        'message' => $message
-                    ];
+                    $temp['pass'] = $validationRule->get('pass');
                 }
+
+                // remove validation parts marked as hidden in config
+                if (count($this->_config['hiddenRuleParts'])) {
+                    foreach ($this->_config['hiddenRuleParts'] as $arrayKey) {
+                        if (array_key_exists($arrayKey, $temp)) {
+                            unset($temp[$arrayKey]);
+                        };
+                    }
+                }
+
+                $result[$field]['rules'][] = $temp;
             }
         }
 
