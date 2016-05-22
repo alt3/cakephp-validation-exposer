@@ -47,7 +47,7 @@ matching your CakePHP API backend's validation rules. Some benefits:
 ## Usage
 
 1. Create a `ValidationExposer` object anywhere in your application
-2. Call the `applicationRules()` method
+2. Call the `rules()` method
 3. Present the returned array with validation information as you see fit
 
 ### API example
@@ -72,7 +72,7 @@ class SystemController extends AppController
 
         $this->set([
             'success' => true,
-            'data' => $validationExposer->applicationRules(),
+            'data' => $validationExposer->rules(),
             '_serialize' => ['success', 'data']
         ]);
     }
@@ -96,9 +96,9 @@ array and they will not appear in the result set:
 
 ## Methods
 
-### `applicationRules()`
+### `rules()`
 
-Calling the `applicationRules()` method will return a hash containing all
+Calling the `rules()` method will return a hash containing all
 validation information found in your application structured similar to shown
 below:
 

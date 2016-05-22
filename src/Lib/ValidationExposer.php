@@ -67,7 +67,7 @@ class ValidationExposer
      *
      * @return array Array holding validation rules
      */
-    public function applicationRules()
+    public function rules()
     {
         // process rules per table
         $result = [];
