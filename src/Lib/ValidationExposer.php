@@ -15,7 +15,7 @@ class ValidationExposer
      * @var array Will hold merged configuration settings.
      */
     protected $_config = [
-        'tableExclusions' => [
+        'excludedTables' => [
             'phinxlog'
         ]
     ];
@@ -38,7 +38,7 @@ class ValidationExposer
     public function __construct($config = [])
     {
         $this->_config = Hash::merge($this->_config, $config);
-        $this->_excludedTables = $this->_config['tableExclusions'];
+        $this->_excludedTables = $this->_config['excludedTables'];
         $this->_tables = $this->_getApplicationTables();
     }
 
