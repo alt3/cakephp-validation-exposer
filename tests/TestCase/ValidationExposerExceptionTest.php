@@ -9,7 +9,6 @@ use Cake\TestSuite\TestCase;
  */
 class ValidationExposerExceptionTest extends TestCase
 {
-
     /**
      * setUp method executed before every testMethod.
      */
