@@ -58,6 +58,7 @@ matching your CakePHP API backend's validation rules. Some benefits:
 use Alt3\ValidationExposer\Lib\ValidationExposer;
 
 class SystemController extends AppController
+{
 
     public function validationInfo()
     {
