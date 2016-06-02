@@ -212,3 +212,4 @@ Before submitting a PR make sure:
 - [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests)
 and [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer) tests pass
 - [Coveralls Code Coverage ](https://coveralls.io/github/alt3/cakephp-validation-exposer) remains at 100%
+
