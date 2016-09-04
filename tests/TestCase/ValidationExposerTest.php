@@ -6,7 +6,6 @@ use StdClass;
 
 class ValidationExposerTest extends TestCase
 {
-
     public $fixtures = [
         'plugin.Alt3/ValidationExposer.Articles',
         'plugin.Alt3/ValidationExposer.Authors',
