@@ -8,6 +8,8 @@
 
 Easily expose your CakePHP 3.x application validation rules.
 
+![Abandoned repository](./abandoned-repo.png "This repository is no longer maintained.")
+
 ## Why use it?
 
 Exposing your application's validation rules can be very useful for e.g.
